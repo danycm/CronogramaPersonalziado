@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gantt Chart</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="top-bar">
+        <h1>Gantt Chart</h1>
+        <div class="actions">
+            <button id="save">Save</button>
+            <button id="load">Load</button>
+            <button id="share">Share</button>
+            <button id="export-pdf">Export PDF</button>
+            <button id="export-png">Export PNG</button>
+            <button id="export-csv">Export CSV</button>
+        </div>
+    </header>
+    <main class="main-container">
+        <div class="gantt-chart-area">
+            </div>
+        <aside class="side-panel">
+            <h2>Add/Edit Task</h2>
+            <form id="task-form">
+                <label for="task-name">Task Name:</label>
+                <input type="text" id="task-name" required>
+                <label for="task-description">Description:</label>
+                <textarea id="task-description"></textarea>
+                <label for="task-start">Start Date:</label>
+                <input type="date" id="task-start" required>
+                <label for="task-end">End Date:</label>
+                <input type="date" id="task-end" required>
+                <label for="task-progress">Progress (%):</label>
+                <input type="number" id="task-progress" min="0" max="100" value="0">
+                <label for="task-dependencies">Dependencies:</label>
+                <input type="text" id="task-dependencies" placeholder="e.g., 1,2">
+                <button type="submit">Add Task</button>
+            </form>
+        </aside>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

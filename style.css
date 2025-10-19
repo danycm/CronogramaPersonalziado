@@ -1,130 +1,214 @@
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f0f2f5;
+    --text-primary: #1d2129;
+    --text-secondary: #606770;
+    --border-color: #ccd0d5;
+    --header-bg: #ffffff;
+    --header-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --button-bg: #1877f2;
+    --button-text: #ffffff;
+    --task-bar-bg: #1877f2;
+    --task-progress-bg: #36a420;
+    --critical-path-bg: #e41e3f;
+    --task-delayed-bg: #f39c12;
+    --border-radius: 8px;
+}
+
+[data-theme="dark"] {
+    --bg-primary: #18191a;
+    --bg-secondary: #242526;
+    --text-primary: #e4e6eb;
+    --text-secondary: #b0b3b8;
+    --border-color: #3e4042;
+    --header-bg: #242526;
+    --header-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --button-bg: #2d88ff;
+    --task-bar-bg: #2d88ff;
+}
+
 body {
-    font-family: sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     display: flex;
     flex-direction: column;
     height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.top-bar {
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-}
-
-.top-bar h1 {
-    margin: 0;
-}
-
-.actions button {
-    margin-left: 10px;
+    padding: 0 24px;
+    height: 60px;
+    background-color: var(--header-bg);
+    box-shadow: var(--header-shadow);
+    z-index: 1000;
 }
 
 .main-container {
     display: flex;
-    flex: 1;
-}
-
-.gantt-chart-area {
-    flex: 3;
-    padding: 20px;
-    overflow-x: auto;
+    margin-top: 60px;
+    height: calc(100vh - 60px);
 }
 
 .side-panel {
-    flex: 1;
-    padding: 20px;
-    background-color: #f4f4f4;
+    width: 320px;
+    padding: 24px;
+    background-color: var(--bg-primary);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
 }
 
-.side-panel h2 {
-    margin-top: 0;
+.gantt-chart-area {
+    flex-grow: 1;
+    padding: 24px;
+    overflow: auto;
+    position: relative;
 }
 
-#task-form {
+.gantt-task-row {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+}
+
+.gantt-bar {
+    position: absolute;
+    height: 100%;
+    background-color: var(--task-bar-bg);
+    border-radius: var(--border-radius);
+    color: var(--button-text);
     display: flex;
-    flex-direction: column;
-}
-
-#task-form label {
-    margin-top: 10px;
-}
-
-#task-form input,
-#task-form textarea {
-    padding: 5px;
-    margin-top: 5px;
-}
-
-#task-form button {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #333;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.gantt-grid {
-    display: grid;
-    grid-template-columns: 150px repeat(auto-fit, minmax(50px, 1fr));
-    gap: 5px;
     align-items: center;
-}
-
-.gantt-task-name, .gantt-date-header {
-    padding: 10px;
-    background-color: #f0f0f0;
-    text-align: center;
-    border: 1px solid #ccc;
+    padding: 0 10px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.gantt-task-bar {
-    grid-row: auto / span 1;
-    background-color: #3498db;
-    color: white;
-    border-radius: 5px;
-    padding: 10px;
-    position: relative;
     cursor: move;
-    display: flex;
-    align-items: center;
 }
 
-.gantt-task-progress {
-    background-color: #2ecc71;
-    height: 100%;
+.gantt-bar.critical-path {
+    background-color: var(--critical-path-bg);
+}
+
+.gantt-bar-progress {
     position: absolute;
     left: 0;
     top: 0;
-    border-radius: 5px;
-    opacity: 0.5;
+    height: 100%;
+    background-color: var(--task-progress-bg);
+    opacity: 0.3;
 }
 
-.dependency-line {
+.gantt-timeline-header {
     position: absolute;
-    border: 1px solid #f00;
-    height: 0;
-    z-index: 1;
+    top: 0;
+    height: 30px;
+    text-align: center;
+    border-right: 1px solid var(--border-color);
+}
+
+/* Form and Button Styles */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    opacity: 0.9;
 }
 
 .delete-task {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    background-color: red;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 50%;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 20px;
     height: 20px;
-    line-height: 20px;
+    border-radius: 50%;
+    background-color: var(--critical-path-bg);
+    color: var(--button-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.delete-task:hover {
+    opacity: 0.8;
+}
+
+.gantt-bar-content {
+    padding: 5px;
+}
+
+.gantt-bar-description {
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
+.gantt-resizer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: ew-resize;
+}
+
+.resizer-left {
+    left: 0;
+}
+
+.resizer-right {
+    right: 0;
+}
+
+.gantt-bar.task-delayed {
+    background-color: var(--task-delayed-bg);
+}
+
+.error-message {
+    color: var(--critical-path-bg);
+    font-weight: bold;
+    padding: 20px;
     text-align: center;
 }
